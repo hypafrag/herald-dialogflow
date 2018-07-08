@@ -1,5 +1,5 @@
 from dialogflow_v2 import SessionsClient
-from subprocess import run
+from subprocess import getoutput
 from sys import argv
 from os import environ as env
 import config
@@ -12,9 +12,12 @@ reply = sessions_client.detect_intent(session, {'text': {'text': ' '.join(argv[1
 result = reply.query_result
 action = result.action
 
+def play_poneys(where):
+    getoutput("herald-skills play_poneys {}".format(action, where))
+
 handlers = {
     'play_poneys': lambda parameters:
-        run(["herald-skills", action, parameters['where']])
+        play_poneys(parameters['where'])
 }
 
 if action in handlers:
