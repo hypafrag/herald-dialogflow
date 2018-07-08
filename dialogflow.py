@@ -13,7 +13,8 @@ result = reply.query_result
 action = result.action
 
 def play_poneys(where):
-    getoutput("herald-skills play_poneys {}".format(action, where))
+    getoutput("{}/.env/bin/python {}/skills.py play_poneys {}".format(
+        config.herald_skills_path, config.herald_skills_path, where))
 
 handlers = {
     'play_poneys': lambda parameters:
